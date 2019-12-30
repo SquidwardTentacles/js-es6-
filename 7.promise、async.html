@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // promise解决回调地狱的问题
+    function f1() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          console.log("执行完成");
+          resolve("f1执行完成");
+        }, 500);
+      });
+    }
+    function f2() {
+      return new Promise((resolve, reject) => {
+        return setTimeout(() => {
+          console.log("第二步执行完成");
+          reject("f2执行完成 err");
+        }, 500);
+      });
+    }
+    // f1()
+    //   .then(() => {
+    //     // return一个promise对象
+    //     return f2();
+    //   })
+    //   .then(() => {
+    //     return f1();
+    //   })
+    //   .then(() => {
+    //     return f2();
+    //   })
+    //   .then(() => {
+    //     console.log("完成");
+    //   });
+
+    // async
+    // (async function() {
+    //   // await必须在async函数内执行 await可以执行异步操作
+    //   var f1Back = await f1();
+    //   console.log(f1Back);
+
+    //   var f2Back = await f2();
+    //   console.log(f2Back);
+    // })();
+
+    // async传递数据 以及执行错误
+    (async function() {
+      try {
+        let f1Data = await f1();
+      } catch (err) {
+        console.log(err);
+      }
+      try {
+        let data = await f2();
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  </script>
+</html>

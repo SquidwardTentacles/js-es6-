@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // 上下文调用方式 call,apply,bind
+    function f1() {
+      console.log(this);
+    }
+    f1.call(1);
+    f1.call("1");
+    f1.call(false);
+    f1.call(null);
+    f1.call(undefined);
+    f1.call([1, 3, 5]);
+    f1.call({ age: 20 });
+    /*
+      call()第一个参数决定了this的值
+      如果第一个参数是复杂数据类型 则this指向数据自身 
+      如果是基本数据类型 （null/undefined 除外 -->指向window）则指向该类型的构造函数的实例 
+     如 1 -->new number(1)
+     '1' -->new String('1')
+     false -->new boolen(false)
+     上述代码可以使用apply替换
+     不同： 传惨方式不同 apply只能是数组
+    */
+    function toString(a, b, c) {
+      console.log(a + "" + b + "" + c);
+    }
+    toString.call(null, 1, 3, 6);
+    toString.apply(null, [1, 3, 5]);
+  </script>
+</html>

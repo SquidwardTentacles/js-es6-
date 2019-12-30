@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width= , initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    var obj5 = {
+      age: 5,
+      // run: function() {
+      //   var that = this;
+      //   setTimeout(function() {
+      //     console.log(that.age);
+      //   }, 50);
+      // }
+      run: function() {
+        setTimeout(
+          function() {
+            console.log(this.age);
+          }.bind(this),
+          50
+        );
+        // 通过执行了bind方法 匿名函数本身并没有执行 只是改变了该函数内部的this指向
+        // bind与call apply区别
+        // call apply 是立刻执行这个函数 并且执行过程中绑定this的值 而bind并没有立即执行 而是创建了一个新的函数 新函数绑定了this值
+      }
+    };
+    obj5.run();
+  </script>
+</html>

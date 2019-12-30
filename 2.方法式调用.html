@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // // 方法调用方式
+    // function Person() {
+    //   this.age = 20;
+    // }
+    // Person.prototype.run = function() {
+    //   console.log(this.age);
+    // };
+
+    // var p1 = new Person();
+    // p1.run();
+
+    // var p2 = {
+    //   height: 180,
+    //   travel: function() {
+    //     console.log(this.height);
+    //   }
+    // };
+    // p2.travel();
+
+    var clear = function() {
+      console.log(this.length);
+    };
+    var length = 50;
+    var tom = { c: clear, length: 180 };
+    tom.c();
+    /*
+      这里是方法式调用 打印this.length为100 
+      结论： 由于clear函数被当成tom.c() 这种放方式的形式进行调用 
+      所以函数内部的this指向调用该方法的对象 toim
+    */
+  </script>
+</html>

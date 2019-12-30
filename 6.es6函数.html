@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    let obj = {
+      height: 155,
+      say: () => {
+        console.log(this.height);
+      },
+      // 箭头函数的this由其外层函数中的this决定 箭头函数不能作为构造函数 不能使用arguments对象 可以用rest替代
+      run() {
+        console.log(this.height);
+      }
+    };
+    obj.say();
+    obj.run();
+  </script>
+</html>
