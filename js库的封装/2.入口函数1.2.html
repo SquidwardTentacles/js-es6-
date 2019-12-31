@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>aaa</div>
+    <div>bbb</div>
+    <div>ccc</div>
+    <span class="changecolor">color</span>
+  </body>
+  <script>
+    (function(window) {
+      function jQuery(element) {
+        return new init(element);
+      }
+      function init(element) {
+        const elements = document.querySelectorAll(element);
+        for (let i = 0; i < elements.length; i++) {
+          this[i] = elements[i];
+        }
+        this.length = elements.length;
+      }
+      init.prototype = {
+        constructor: init,
+        css(name, value) {
+          for (let i = 0; i < this.length; i++) {
+            const element = this[i];
+            element.style[name] = value;
+          }
+        },
+        extend: function(...args) {
+          console.log(args);
+        }
+      };
+
+      window.$ = window.jQuery = jQuery;
+    })(window);
+    $(".changecolor").css("color", "pink");
+    $.extend({}, { p: 0 });
+  </script>
+</html>

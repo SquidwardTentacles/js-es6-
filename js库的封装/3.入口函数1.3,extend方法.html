@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>aaa</div>
+    <div>bbb</div>
+    <div>ccc</div>
+    <span class="changecolor">color</span>
+  </body>
+  <script>
+    // (function(window) {
+    //   function jQuery(element) {
+    //     return new init(element);
+    //   }
+    //   function init(element) {
+    //     const elements = document.querySelectorAll(element);
+    //     for (let i = 0; i < elements.length; i++) {
+    //       this[i] = elements[i];
+    //     }
+    //     this.length = elements.length;
+    //   }
+    //   init.prototype = {
+    //     constructor: init,
+    //     css(name, value) {
+    //       for (let i = 0; i < this.length; i++) {
+    //         const element = this[i];
+    //         element.style[name] = value;
+    //       }
+    //     }
+    //   };
+
+    //   window.$ = window.jQuery = jQuery;
+    // })(window);
+
+    // (function jQuery() {
+    //   function jQuery(selector) {
+    //     // 1、获取页面中所有的元素
+    //     // 2、把这个元素放到一个特定的对象中
+    //     let _init = jQuery.prototype.init;
+    //     return new _init(selector);
+    //   }
+    //   jQuery.prototype = {
+    //     constructor: jQuery,
+    //     init: function(selector) {
+    //       // 把dom元素放到这个对象中
+    //       const elements = document.querySelectorAll(selector);
+    //       for (let i = 0; i < elements.length; i++) {
+    //         this[i] = elements[i];
+    //       }
+    //       this.length = elements.length;
+    //     },
+    //     css(name, value) {
+    //       for (let i = 0; i < this.length; i++) {
+    //         this[i].style[name] = value;
+    //       }
+    //     }
+    //   };
+    //   // 此时创建的jQuery是init构造函数的实例
+    //   // 为了让jQuery对象可以访问到css方法 让init的原型继承自jQuery.prototype
+    //   jQuery.prototype.init.prototype = jQuery.prototype;
+
+    //   /**
+    //     1、创建了一个init的对象
+    //     2、执行css方法
+    //       找对象本身有没有css方法 并没有
+    //       找对象原型： init.prototype -->jquery.prototype
+    //       发现jquery.prototype中有一个css方法
+    //   */
+    //   window.$ = window.jQuery = jQuery;
+    // })(window);
+
+    // (function(window) {
+    //   function jQuery(selector) {
+    //     let _init = jQuery.prototype.init;
+    //     return new _init(selector);
+    //   }
+    //   jQuery.prototype = {
+    //     constructor: jQuery,
+    //     init: function(selector) {
+    //       const elements = document.querySelectorAll(selector);
+    //       for (let i = 0; i < elements.length; i++) {
+    //         this[i] = elements[i];
+    //       }
+    //       this.length = elements.length;
+    //     },
+    //     css: function(name, value) {
+    //       for (let i = 0; i < this.length; i++) {
+    //         this[i].style[name] = value;
+    //       }
+    //     }
+    //   };
+    //   jQuery.prototype.init.prototype = jQuery.prototype;
+
+    //   window.$ = window.jQuery = jQuery;
+    // })(window);
+
+    (function(window) {
+      function jQuery(selector) {
+        let _init = jQuery.fn.init;
+        return new _init(selector);
+      }
+      jQuery.fn = jQuery.prototype = {
+        constructor: jQuery,
+        init: function(selector) {
+          const elements = document.querySelectorAll(selector);
+          for (let i = 0; i < elements.length; i++) {
+            this[i] = elements[i];
+          }
+          this.length = elements.length;
+        },
+        css: function(name, value) {
+          for (let i = 0; i < this.length; i++) {
+            this[i].style[name] = value;
+          }
+        }
+      };
+      jQuery.fn.ectend = jQuery.extends = function(...arg) {
+        /**
+        两个extend方法的区别在于 
+        1 接受数据的对象发生了变化 $.extend:第一个实参
+        $.fn.extend：this
+        2 提供数据的对象发生了变化 
+          $.extend 第二个以及第二个以后的参数
+          $.fn.extend 所有参数
+        
+        拷贝过程是一样的
+        */
+
+        let target,
+          source = [];
+        source = [...arg];
+
+        if (this === jQuery) {
+          target = arg[0];
+          source.splice(0, 1);
+        } else {
+          target = this;
+        }
+        source.forEach(function(item, index) {
+          // 取出item中的每一个属性
+          Object.keys(item).forEach(key => {
+            target[key] = item[key];
+          });
+        });
+      };
+      jQuery.fn.init.prototype = jQuery.fn;
+      window.$ = window.jQuery = jQuery;
+    })(window);
+    $(".changecolor").css("color", "pink");
+    $.extends({}, { p: 0 }, { c: 4 });
+
+    // 第二个extend方法
+    $.fn.extend({
+      dataStr() {},
+      dataNum() {}
+    });
+  </script>
+</html>
