@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+  </body>
+  <script>
+    (function(window) {
+      function jQuery(selector) {
+        return new jQuery.fn.init(selector);
+      }
+      jQuery.fn = jQuery.prototype = {
+        constructor: jQuery,
+        init: function(selecter) {
+          let elements = document.querySelectorAll(selecter);
+          for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            this[i] = element;
+            // this为伪数组 没有length属性
+            this.length = elements.length;
+          }
+        },
+        css: function(name, value) {
+          for (let i = 0; i < this.length; i++) {
+            this[i].style[name] = value;
+          }
+        }
+      };
+      // extend方法
+      jQuery.extend = jQuery.fn.extend = function(...args) {
+        // 因为参数个数不一定 所以使用对象扩展运算符
+        // extend有两个方法 一个是合并对象 一个是向jquery中添加方法 后者参数全部包裹在一个对象中
+        let target = this; //接受数据的对象
+        let source = args; //需要合并的数据
+
+        if (args.length === 1) {
+          target = this;
+        } else {
+          // 合并对象
+          target = args[0];
+          source.splice(0, 1);
+        }
+        Object.assign(target, ...source);
+        return target;
+      };
+
+      jQuery.extend({
+        each(obj, callback) {
+          // 有两种情况 数组使用for循环 对象使用for in循环
+          /**
+            不仅仅可以遍历数组 也可以遍历伪数组
+          */
+          if (length in obj && length >= 0) {
+            // 数组
+            for (let i = 0; i < obj.length; i++) {
+              // 改变this指向
+              callback.call(obj[i], i, obj[i]);
+            }
+          } else {
+            for (const key in obj) {
+              callback.call(obj[key], key, obj[key]);
+            }
+          }
+        }
+      });
+      jQuery.fn.extend({
+        // 这里的each方法用来遍历dom元素
+        each(callback) {
+          jQuery.each(this, callback);
+        }
+      });
+      jQuery.fn.init.prototype = jQuery.fn;
+      window.$ = window.jQuery = jQuery;
+    })(window);
+    jQuery("p").css("color", "blue");
+    let p = {};
+
+    $.each([1, 3, 5], function(i, v) {
+      console.log(i, v);
+    });
+    $.each({ 1: "a", 3: "s", 5: "a" }, function(i, v) {
+      console.log(i, v);
+    });
+    $("p").each(function(i, e) {
+      console.log(i, e);
+      e.style.color = "red";
+    });
+  </script>
+</html>

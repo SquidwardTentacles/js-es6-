@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // // 正则表达式的匹配
+    // let reg = /a/; //匹配字符串中是否存在a字符
+    // let str = "abc";
+    // console.log(reg.test(str));
+
+    // 正则表达式中的特殊字符
+    // .   匹配除了换行符（\n,\r）以外的任意字符 精确匹配
+    // let reg = /./;
+    // let str = "\n"; //false
+    // let str = "a \n"; // 存在a 所以是true
+    // let str = "a"; //true 不存在换行符
+    // console.log(reg.test(str));
+    // 注：如果要匹配字符串‘.’ 可以使用转义符 \或者[]
+    /**
+        匹配邮箱 
+        /qq\.com/或/qq[.]com/
+     */
+
+    //  \d 表示数字
+    // let reg = /\d/; 如果存在数字就为true
+    // let reg = /\d\d/ //必须存在两个连续的数字
+    // let str = "123abc"; //由于存在一个数字 所以为true
+
+    // \D 是\d的取反结果 表示不是数字 有一个不是数字就可以
+    // let reg = /\D/;
+    // let str = "asd123"; //true 存在不是数字的字母
+    // let str = "123"; //false
+    // console.log(reg.test(str));
+
+    // \w 匹配字母、数字、下划线，三者满足其一即可 字母不区分大小写
+    // let reg = /\w/;
+    // let str = ".";//false
+    // let str = "123"; //true
+    // console.log(reg.test(str));
+
+    // \W \w的取反
+    // let reg = /\W/;
+    // str = "ac-";//true
+    // console.log(reg.test(str));
+
+    // \s 表示匹配一个空白字符 如 \r \n \t 空格等
+    //  \S 是\s的取反
+
+    // 转义符
+    // let reg = /./ //匹配了换行符以外的任意字符
+    // let reg = /\./ //匹配‘.’字符
+    // let reg = /\// //匹配   / 斜杠
+
+    // 字符集合
+    // let reg = /[1a2d3]/; //匹配这五个字符中的任意一个
+    // let str = "a12344"; //true
+    // let str = "44"; //false
+    // console.log(reg.test(str));
+
+    // 必须同时符合中括号中的条件 如果是字母 必须同时满足两个中括号的条件 但是只要有其中一个中括号中的任意一个字符即可
+    // let reg = /[123][abc]/;
+    // console.log(reg.test("1a"));//true
+    // console.log(reg.test("1")); //false
+    // console.log(/[\d][\w]/.test("1A"));
+
+    // [^]
+    // console.log(/[^abc]/.test("a")); //不是a不是b并且不是c 如果有一个满足条件就是是 否则为false
+    // console.log(/[^123]/.test("1234")); //true
+
+    // 边界 ^表示最左边 $表示最右边
+    // console.log(/abc$/.test("123abc")); //true 以abc结尾
+    // console.log(/^abc$/.test("abcs")); //全字匹配abc
+
+    // 量词
+    /**
+       '*'出现0次或多次
+       '+' 出现一次或多次 
+       '{3}' 出现三次
+       '{3,}'至少出现三次
+       '{3,5}'出现三到五次
+    */
+    // console.log(/\d{3}/.test("122344"));//true出现至少三次数字
+    // console.log(/abc{3}/.test("abcccsssss")); //有abccc便为true
+
+    // '|'或者
+    // console.log(/abc|123/.test("abs123")); //匹配adc或者123
+
+    // () 分组
+    console.log(/(^1)([3-9])\d{9}/.test(13911111111));
+    console.log(
+      /[a-z0-9][@][a-z1-9{2,3}][\.(a-z0-9)]/.test("2961242927@163.cn")
+    );
+  </script>
+</html>
